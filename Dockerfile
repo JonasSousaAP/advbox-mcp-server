@@ -1,0 +1,20 @@
+# Build stage
+FROM node:20-alpine AS builder
+WORKDIR /app
+COPY package*.json ./
+COPY tsconfig.json ./
+RUN npm install
+COPY src/ ./src/
+RUN npm run build
+
+# Production stage
+FROM node:20-alpine AS production
+WORKDIR /app
+RUN addgroup -g 1001 advbox && adduser -u 1001 -G advbox -s /bin/sh -D advbox
+COPY package*.json ./
+RUN npm install --omit=dev && npm cache clean --force
+COPY --from=builder /app/dist ./dist
+RUN chown -R advbox:advbox /app
+USER advbox
+EXPOSE 3000
+ENTRYPOINT ["node", "dist/http-server.js"]
