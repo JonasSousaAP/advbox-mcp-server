@@ -2,7 +2,7 @@
 
 **Versão:** 2.2.0 (Hardened)  
 **Última atualização:** 05 de Janeiro de 2026  
-**Autor:** Jonas Sousa - Equipe Técnica
+**Autor:** Jonas Sousa
 
 ---
 
